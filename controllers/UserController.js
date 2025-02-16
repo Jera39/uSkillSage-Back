@@ -7,8 +7,10 @@ exports.createUser = async (req, res) => {
     try {
         const { heroName, email, genre, password } = req.body;
 
+        const normalizedEmail = email.trim().toLowerCase();
+
         // Validar el correo electrónico
-        if (!validator.isEmail(email)) {
+        if (!validator.isEmail(normalizedEmail)) {
             return res.status(400).json({ error: 'El correo electrónico no es válido' });
         }
 
@@ -18,7 +20,7 @@ exports.createUser = async (req, res) => {
             .get();
 
         const emailSnapshot = await firestoreDb.collection('users')
-            .where('email', '==', email)
+            .where('email', '==', normalizedEmail)
             .get();
 
         if (!heroNameSnapshot.empty) {
@@ -34,7 +36,7 @@ exports.createUser = async (req, res) => {
 
         const newUser = {
             heroName,
-            email,
+            email: normalizedEmail,
             genre,
             password: hashedPassword, // Guardar la contraseña cifrada
             level: 1,
@@ -63,6 +65,11 @@ exports.loginUser = async (req, res) => {
 
         let user = null;
 
+        // Normalizar el identificador si es un correo electrónico
+        const normalizedIdentifier = identifier.includes('@')
+            ? identifier.trim().toLowerCase() // Normalizar si es un correo
+            : identifier; // Mantener igual si es un nombre de héroe
+
         // Consulta 1: Buscar por heroName
         const heroNameSnapshot = await firestoreDb.collection('users')
             .where('heroName', '==', identifier)
@@ -77,7 +84,7 @@ exports.loginUser = async (req, res) => {
         // Si no se encontró un usuario por heroName, buscar por email
         if (!user) {
             const emailSnapshot = await firestoreDb.collection('users')
-                .where('email', '==', identifier)
+                .where('email', '==', normalizedIdentifier)
                 .get();
 
             if (!emailSnapshot.empty) {
