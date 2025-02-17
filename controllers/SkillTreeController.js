@@ -1,4 +1,4 @@
-const User = require('../models/User');
+const User = require('../models/UserModel');
 
 // 1. Desbloquear un nodo en el árbol de habilidades
 exports.unlockSkillNode = async (req, res) => {

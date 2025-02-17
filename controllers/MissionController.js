@@ -1,5 +1,5 @@
 const Mission = require('../models/MissionModel');
-const UserCategory = require('../models/UserCategory');
+const UserCategory = require('../models/UserCategoryModel');
 
 // 1. Crear una nueva misión
 exports.createMission = async (req, res) => {

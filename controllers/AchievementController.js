@@ -1,4 +1,4 @@
-const User = require('../models/User');
+const User = require('../models/UserModel');
 
 // 1. Desbloquear un logro
 exports.unlockAchievement = async (req, res) => {

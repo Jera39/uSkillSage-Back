@@ -1,7 +1,7 @@
 const { firestoreDb } = require('../config/db');
 const Category = require('../models/CategoryModel');
-const Subcategory = require('../models/Subcategory');
-const UserCategory = require('../models/UserCategory');
+const Subcategory = require('../models/SubcategoryModel');
+const UserCategory = require('../models/UserCategoryModel');
 
 // 1. Crear una categoría principal
 exports.createCategory = async (req, res) => {
