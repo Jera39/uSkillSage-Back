@@ -35,17 +35,17 @@ const getBackgroundImage = (genre) => {
     }
 };
 
-const isAdmin = (req, res, next) => {
-    const user = req.user; // Suponiendo que el usuario autenticado está en el request
+// const isAdmin = (req, res, next) => {
+//     const user = req.user; // Suponiendo que el usuario autenticado está en el request
 
-    if (!user || !user.isAdmin) {
-        return res.status(403).json({ error: 'Acceso denegado. Se requieren privilegios de administrador.' });
-    }
+//     if (!user || !user.isAdmin) {
+//         return res.status(403).json({ error: 'Acceso denegado. Se requieren privilegios de administrador.' });
+//     }
 
-    next(); // Continuar si el usuario es administrador
-};
+//     next(); // Continuar si el usuario es administrador
+// };
 
-module.exports = isAdmin;
+// module.exports = isAdmin;
 
 
 // Crear un usuario en Firestore
@@ -110,7 +110,7 @@ exports.createUser = async (req, res) => {
             experience: 0,
             skills: [],
             createdAt: new Date(),
-            isAdmin: false
+            isAdmin: false,
         };
 
         const userRef = await firestoreDb.collection('users').add(newUser);
@@ -280,45 +280,45 @@ exports.testEmail = async (req, res) => {
     }
 };
 
-exports.createAdmin = async (req, res) => {
-    try {
-        const { username, password, heroName, genre, gender } = req.body;
+// exports.createAdmin = async (req, res) => {
+//     try {
+//         const { username, password, heroName, genre, gender } = req.body;
 
-        // Verificar si ya existe un administrador
-        const adminExists = await User.findOne({ isAdmin: true });
-        if (adminExists) {
-            return res.status(400).json({ error: 'Ya existe un administrador registrado.' });
-        }
+//         // Verificar si ya existe un administrador
+//         const adminExists = await User.findOne({ isAdmin: true });
+//         if (adminExists) {
+//             return res.status(400).json({ error: 'Ya existe un administrador registrado.' });
+//         }
 
-        // Cifrar la contraseña
-        const hashedPassword = await bcrypt.hash(password, 10);
+//         // Cifrar la contraseña
+//         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Crear el usuario administrador
-        const adminUser = new User({
-            username,
-            password: hashedPassword,
-            heroName,
-            genre,
-            gender,
-            isAdmin: true // Establecer como administrador
-        });
+//         // Crear el usuario administrador
+//         const adminUser = new User({
+//             username,
+//             password: hashedPassword,
+//             heroName,
+//             genre,
+//             gender,
+//             isAdmin: true // Establecer como administrador
+//         });
 
-        await adminUser.save();
+//         await adminUser.save();
 
-        res.status(201).json({ message: 'Administrador creado exitosamente.' });
-    } catch (error) {
-        console.error('Error al crear el administrador:', error);
-        res.status(500).json({ error: 'Error al crear el administrador.' });
-    }
-};
+//         res.status(201).json({ message: 'Administrador creado exitosamente.' });
+//     } catch (error) {
+//         console.error('Error al crear el administrador:', error);
+//         res.status(500).json({ error: 'Error al crear el administrador.' });
+//     }
+// };
 
-exports.specialAction = async (req, res) => {
-    const user = req.user;
+// exports.specialAction = async (req, res) => {
+//     const user = req.user;
 
-    if (!user.isAdmin) {
-        return res.status(403).json({ error: 'Esta acción solo está disponible para administradores.' });
-    }
+//     if (!user.isAdmin) {
+//         return res.status(403).json({ error: 'Esta acción solo está disponible para administradores.' });
+//     }
 
-    // Realizar la acción especial
-    res.json({ message: 'Acción especial realizada por el administrador.' });
-};
+//     // Realizar la acción especial
+//     res.json({ message: 'Acción especial realizada por el administrador.' });
+// };
