@@ -25,6 +25,8 @@ const sendEmail = async (to, subject, htmlContent) => {
         await transporter.sendMail(mailOptions);
         console.log(`Correo enviado a ${to}: ${subject}`);
     } catch (error) {
+        console.log('Correo:', process.env.EMAIL_USER);
+        console.log('Contraseña:', process.env.EMAIL_PASS);
         console.error('Error al enviar el correo:', error);
         throw new Error('No se pudo enviar el correo');
 
