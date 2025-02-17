@@ -168,7 +168,7 @@ exports.createUser = async (req, res) => {
 
         // Enviar correo de bienvenida
         try {
-            const subject = '¡Bienvenido a uSkilSage!';
+            const subject = '¡Bienvenido a uSkillSage!';
             await sendEmail(email, subject, htmlContent);
             console.log(`Correo enviado a ${email}: ${subject}`);
         } catch (emailError) {
