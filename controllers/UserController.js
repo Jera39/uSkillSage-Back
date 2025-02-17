@@ -167,8 +167,15 @@ exports.createUser = async (req, res) => {
         `;
 
         // Enviar correo de bienvenida
-        const subject = '¡Bienvenido a uSkilSage!';
-        await sendEmail(email, subject, htmlContent);
+        try {
+            const subject = '¡Bienvenido a uSkilSage!';
+            await sendEmail(email, subject, htmlContent);
+            console.log(`Correo enviado a ${email}: ${subject}`);
+        } catch (emailError) {
+            console.error('Error al enviar el correo de bienvenida:', emailError);
+            return res.status(500).json({ error: 'Error al enviar el correo de bienvenida' });
+        }
+
 
         res.status(201).json({ message: 'Usuario creado', id: userRef.id });
     } catch (error) {
@@ -235,5 +242,27 @@ exports.getUsers = async (req, res) => {
         res.json(users);
     } catch (error) {
         res.status(500).json({ error: 'Error al obtener los usuarios' });
+    }
+};
+
+// Función para probar el envío de correos
+exports.testEmail = async (req, res) => {
+    try {
+        const { email } = req.body;
+
+        if (!email) {
+            return res.status(400).json({ error: 'El correo electrónico es obligatorio' });
+        }
+
+        const subject = 'Prueba de Correo';
+        const htmlContent = `
+        <h1>¡Hola!</h1>
+        <p>Este es un mensaje de prueba enviado desde uSkilSage.</p>`;
+
+        await sendEmail(email, subject, htmlContent);
+        res.json({ message: 'Correo de prueba enviado correctamente' });
+    } catch (error) {
+        console.error('Error al enviar el correo de prueba:', error);
+        res.status(500).json({ error: 'Error al enviar el correo de prueba' });
     }
 };

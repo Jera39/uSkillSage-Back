@@ -8,7 +8,7 @@ const achievementRoutes = require('./routes/AchievementRoutes');
 require('dotenv').config();
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.json());
@@ -30,3 +30,6 @@ app.get('/api/data', (req, res) => {
 app.listen(port, () => {
     console.log(`Servidor escuchando en el puerto ${port}`);
 });
+
+console.log('Correo:', process.env.EMAIL_USER);
+console.log('Contraseña:', process.env.EMAIL_PASS);

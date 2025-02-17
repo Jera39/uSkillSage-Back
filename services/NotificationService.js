@@ -1,13 +1,16 @@
+require('dotenv').config();
 const nodemailer = require('nodemailer');
+// const credentials = require('../.env')
 
 // Configuración del transporte de correo
 const transporter = nodemailer.createTransport({
-    service: 'Gmail', // Puedes usar otros servicios como Outlook, Yahoo, etc.
+    service: "gmail",
     auth: {
-        user: process.env.EMAIL_USER, // Tu dirección de correo electrónico
-        pass: process.env.EMAIL_PASS  // Tu contraseña de correo electrónico
-    }
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+    },
 });
+
 
 // Función para enviar un correo electrónico
 const sendEmail = async (to, subject, htmlContent) => {
@@ -24,6 +27,7 @@ const sendEmail = async (to, subject, htmlContent) => {
     } catch (error) {
         console.error('Error al enviar el correo:', error);
         throw new Error('No se pudo enviar el correo');
+
     }
 };
 module.exports = { sendEmail };
