@@ -2,6 +2,8 @@ const { firestoreDb } = require('../config/db');
 const bcrypt = require('bcrypt');
 const validator = require('validator');
 
+const { sendEmail } = require('../services/NotificationService');
+
 // Crear un usuario en Firestore
 exports.createUser = async (req, res) => {
     try {
@@ -47,6 +49,12 @@ exports.createUser = async (req, res) => {
         };
 
         const userRef = await firestoreDb.collection('users').add(newUser);
+
+        // Enviar correo de bienvenida
+        // const subject = '¡Bienvenido a uSkilSage!';
+        // const text = `Hola, ${heroName}!\n\nFelicidades por crear tu cuenta en uSkilSage. Tu aventura comienza ahora.\n\nAtentamente,\nEl equipo de uSkilSage`;
+        // await sendEmail(email, subject, text);
+
         res.status(201).json({ message: 'Usuario creado', id: userRef.id });
     } catch (error) {
         console.error('Error detallado:', error); 

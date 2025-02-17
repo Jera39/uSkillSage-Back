@@ -1,6 +1,11 @@
 const express = require('express');
 const cors = require('cors');
 const userRoutes = require('./routes/UserRoutes');
+const categoryRoutes = require('./routes/CategoryRoutes');
+const missionRoutes = require('./routes/MissionRoutes');
+const skillTreeRoutes = require('./routes/SkillTreeRoutes');
+const achievementRoutes = require('./routes/AchievementRoutes');
+require('dotenv').config();
 
 const app = express();
 const port = 3000;
@@ -11,6 +16,10 @@ app.use(cors());
 
 // Rutas
 app.use('/api', userRoutes);
+app.use('/api', categoryRoutes); // Rutas para categorías
+app.use('/api', missionRoutes); // Rutas para misiones
+app.use('/api', skillTreeRoutes); // Rutas para el mapa de habilidades
+app.use('/api', achievementRoutes); // Rutas para logros
 
 // Ruta de prueba
 app.get('/api/data', (req, res) => {
@@ -19,5 +28,5 @@ app.get('/api/data', (req, res) => {
 
 // Iniciar servidor
 app.listen(port, () => {
-    console.log(`Servidor escuchando en el puerto ${port} :3`);
+    console.log(`Servidor escuchando en el puerto ${port}`);
 });
