@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema({
     experience: { type: Number, default: 0 }, // Puntos de experiencia
     skills: { type: [String], default: [] }, // Habilidades desbloqueadas
     achievements: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Achievement' }], // Logros desbloqueados
+    isAdmin: { type: Boolean, default: false }, // Campo para identificar administradores
     createdAt: { type: Date, default: Date.now } // Fecha de creación
 });
 
