@@ -1,5 +1,5 @@
 const { firestoreDb } = require('../config/db');
-const Category = require('../models/Category');
+const Category = require('../models/CategoryModel');
 const Subcategory = require('../models/Subcategory');
 const UserCategory = require('../models/UserCategory');
 

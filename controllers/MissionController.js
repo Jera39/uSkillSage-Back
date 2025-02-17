@@ -1,4 +1,4 @@
-const Mission = require('../models/Mission');
+const Mission = require('../models/MissionModel');
 const UserCategory = require('../models/UserCategory');
 
 // 1. Crear una nueva misión
