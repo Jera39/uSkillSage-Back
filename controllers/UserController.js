@@ -25,11 +25,11 @@ const getWelcomeMessage = (heroName, genre, gender) => {
 const getBackgroundImage = (genre) => {
     switch (genre) {
         case 'Fantasía':
-            return 'https://i.postimg.cc/NfNjH6Jh/fantasy-6835790.jpg';
+            return 'https://i.postimg.cc/LXh8ZcKC/fantasy-6835790.jpg';
         case 'Ciencia Ficción':
-            return 'https://i.postimg.cc/90CQGJH2/ai-generated-8548276.jpg';
+            return 'https://i.postimg.cc/TPdjLJd7/ai-generated-8548276.jpg';
         case 'Mitología':
-            return 'https://i.postimg.cc/8km51QLz/dragon-9017341-1920.png';
+            return 'https://i.postimg.cc/GtwHYbPL/dragon-9017341-1920.png';
         default:
             return 'https://i.postimg.cc/NfNjH6Jh/fantasy-6835790.jpg'; // Imagen predeterminada
     }
