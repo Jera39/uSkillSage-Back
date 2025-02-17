@@ -38,6 +38,7 @@ exports.createUser = async (req, res) => {
             heroName,
             email: normalizedEmail,
             genre,
+            gender,
             password: hashedPassword, // Guardar la contraseña cifrada
             level: 1,
             experience: 0,
