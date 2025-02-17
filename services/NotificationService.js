@@ -10,13 +10,13 @@ const transporter = nodemailer.createTransport({
 });
 
 // Función para enviar un correo electrónico
-const sendEmail = async (to, subject, text) => {
+const sendEmail = async (to, subject, htmlContent) => {
     try {
         const mailOptions = {
             from: process.env.EMAIL_USER,
             to,
             subject,
-            text
+            html: htmlContent // Usar HTML en lugar de texto plano
         };
 
         await transporter.sendMail(mailOptions);
@@ -26,5 +26,4 @@ const sendEmail = async (to, subject, text) => {
         throw new Error('No se pudo enviar el correo');
     }
 };
-
 module.exports = { sendEmail };
