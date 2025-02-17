@@ -109,7 +109,8 @@ exports.createUser = async (req, res) => {
             level: 1,
             experience: 0,
             skills: [],
-            createdAt: new Date()
+            createdAt: new Date(),
+            isAdmin: false
         };
 
         const userRef = await firestoreDb.collection('users').add(newUser);
