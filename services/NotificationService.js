@@ -28,7 +28,7 @@ const sendEmail = async (to, subject, htmlContent) => {
         console.log('Correo:', process.env.EMAIL_USER);
         console.log('Contraseña:', process.env.EMAIL_PASS);
         console.error('Error al enviar el correo:', error);
-        throw new Error('No se pudo enviar el correo');
+        throw new Error('No se pudo enviar el correo', 'Correo:', process.env.EMAIL_USER, 'Contraseña:', process.env.EMAIL_PASS);
 
     }
 };
