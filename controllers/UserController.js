@@ -26,7 +26,7 @@ const getBackgroundImage = (genre) => {
     switch (genre) {
         case 'Fantasía':
             return 'https://u-skill-sage.vercel.app/assets/images/fantasy.jpg';
-        case 'Ciencia Ficción':
+        case 'CienciaFicción':
             return 'https://u-skill-sage.vercel.app/assets/images/scifi.jpg';
         case 'Mitología':
             return 'https://u-skill-sage.vercel.app/assets/images/mitology.png';
