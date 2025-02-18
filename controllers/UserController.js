@@ -9,12 +9,12 @@ const getWelcomeMessage = (heroName, genre, gender) => {
     const greetings = {
         Masculino: {
             Fantasía: `¡Bienvenido, valiente ${heroName}!`,
-            'Ciencia Ficción': `¡Saludos, explorador ${heroName}!`,
+            CienciaFicción: `¡Saludos, explorador ${heroName}!`,
             Mitología: `¡Bienvenido, héroe legendario ${heroName}!`
         },
         Femenino: {
             Fantasía: `¡Bienvenida, valiente ${heroName}!`,
-            'Ciencia Ficción': `¡Saludos, exploradora ${heroName}!`,
+            CienciaFicción: `¡Saludos, exploradora ${heroName}!`,
             Mitología: `¡Bienvenida, heroína legendaria ${heroName}!`
         }
     };
@@ -25,13 +25,13 @@ const getWelcomeMessage = (heroName, genre, gender) => {
 const getBackgroundImage = (genre) => {
     switch (genre) {
         case 'Fantasía':
-            return 'https://i.postimg.cc/KY3wr7xx/fantasy-6835790.jpg';
+            return 'https://u-skill-sage.vercel.app/assets/images/fantasy.jpg';
         case 'Ciencia Ficción':
-            return 'https://i.postimg.cc/ryfjs02J/ai-generated-8548276.jpg';
+            return 'https://u-skill-sage.vercel.app/assets/images/scifi.jpg';
         case 'Mitología':
-            return 'https://i.postimg.cc/8k4KvXML/dragon-9017341-1920.png';
+            return 'https://u-skill-sage.vercel.app/assets/images/mitology.png';
         default:
-            return 'https://i.postimg.cc/qqWCndLk/warrior-7795480.jpg'; // Imagen predeterminada
+            return 'https://u-skill-sage.vercel.app/assets/images/defaultfont.jpg'; // Imagen predeterminada
     }
 };
 
