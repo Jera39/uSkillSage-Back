@@ -171,7 +171,11 @@ exports.createUser = async (req, res) => {
                     <div class="card">
                         <h1>¡Hola, ${heroName}!</h1>
                         <p>${welcomeMessage}</p>
-                        <p>Felicidades por crear tu cuenta en uSkilSage. Tu aventura comienza ahora.</p>
+                        <br>
+                        <p>Felicidades por crear tu cuenta en uSkillSage. Tu aventura comienza ahora.</p>
+                        <br>
+                        <br>
+                        <br>
                         <p class="footer">Atentamente,<br>El equipo de uSkilSage</p>
                     </div>
                 </div>
