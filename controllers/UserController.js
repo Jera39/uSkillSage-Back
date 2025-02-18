@@ -65,7 +65,7 @@ exports.createUser = async (req, res) => {
         }
 
         // Validar el género narrativo
-        if (!['Fantasía', 'Ciencia Ficción', 'Mitología'].includes(genre)) {
+        if (!['Fantasía', 'CienciaFicción', 'Mitología'].includes(genre)) {
             return res.status(400).json({ error: 'El género narrativo es obligatorio y debe ser "Fantasía", "Ciencia Ficción" o "Mitología"' });
         }
 
