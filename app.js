@@ -16,7 +16,7 @@ const port = 3000;
 // Middleware
 app.use(express.json());
 app.use(cors({
-    origin: ['https://tu-dominio-frontend.com', 'http://localhost:4200'], // Permite estas URLs
+    origin: ['https://u-skill-sage.vercel.app', 'http://localhost:4200'], // Permite estas URLs
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
     allowedHeaders: ['Content-Type', 'Authorization'] // Encabezados permitidos
 }));
