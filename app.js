@@ -5,6 +5,8 @@ const categoryRoutes = require('./routes/CategoryRoutes');
 const missionRoutes = require('./routes/MissionRoutes');
 const skillTreeRoutes = require('./routes/SkillTreeRoutes');
 const achievementRoutes = require('./routes/AchievementRoutes');
+const genreRoutes = require('./routes/GenreRoutes');
+
 require('dotenv').config();
 
 const app = express();
@@ -21,6 +23,7 @@ app.use('/api', categoryRoutes); // Rutas para categorías
 app.use('/api', missionRoutes); // Rutas para misiones
 app.use('/api', skillTreeRoutes); // Rutas para el mapa de habilidades
 app.use('/api', achievementRoutes); // Rutas para logros
+app.use('/api', genreRoutes); // Rutas para géneros narrativos
 
 // Ruta de prueba
 app.get('/api/data', (req, res) => {
