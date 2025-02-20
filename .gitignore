@@ -3,3 +3,5 @@
 uskillsage-firebase-adminsdk-fbsvc-9d24ce3b65.json
 
 .env
+
+node_modules/
