@@ -12,4 +12,8 @@ router.route('/genres/:id')
     .put((req, res) => manageGenres(req, res)) // Actualizar un género (action=U)
     .delete((req, res) => manageGenres(req, res)); // Desactivar un género (action=D)
 
+router.get('/testgenres', (req, res) => {
+    res.json({ message: 'Esta es una ruta de prueba.' });
+});
+
 module.exports = router;
