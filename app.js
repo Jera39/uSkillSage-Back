@@ -1,11 +1,11 @@
 const express = require('express');
 const cors = require('cors');
 const userRoutes = require('./routes/UserRoutes');
-const categoryRoutes = require('./routes/CategoryRoutes');
 const missionRoutes = require('./routes/MissionRoutes');
 const skillTreeRoutes = require('./routes/SkillTreeRoutes');
 const achievementRoutes = require('./routes/AchievementRoutes');
 const genreRoutes = require('./routes/GenreRoutes');
+const categoryRoutes = require('./routes/CategoryRoutes');
 
 require('dotenv').config();
 

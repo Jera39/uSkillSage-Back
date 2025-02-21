@@ -1,26 +1,23 @@
 const express = require('express');
 const router = express.Router();
-const {
-    createCategory,
-    createSubcategory,
-    assignCategoriesToUser,
-    getUserCategories,
-    updateUserCategories
-} = require('../controllers/CategoryController');
+const { manageCategories, getGenresForCategories } = require('../controllers/CategoryController');
 
-// 1. Crear una categoría principal
-router.post('/categories', createCategory);
+// Ruta genérica para gestionar categorías
+router.route('/categories')
+    .post((req, res) => manageCategories(req, res)) // Crear una categoría (action=C)
+    .get((req, res) => manageCategories(req, res)); // Obtener todas las categorías (action=G)
 
-// 2. Crear una subcategoría asociada a una categoría principal
-router.post('/categories/:categoryId/subcategories', createSubcategory);
+// Ruta genérica para gestionar una categoría específica por ID
+router.route('/categories/:id')
+    .put((req, res) => manageCategories(req, res)) // Actualizar una categoría (action=U)
+    .delete((req, res) => manageCategories(req, res)); // Desactivar una categoría (action=D)
 
-// 3. Asignar categorías y subcategorías a un usuario
-router.post('/user-categories', assignCategoriesToUser);
+// Ruta para obtener todos los géneros disponibles para ser usados al crear/editar categorías
+router.get('/genres-for-categories', (req, res) => getGenresForCategories(req, res));
 
-// 4. Obtener las categorías y subcategorías asignadas a un usuario
-router.get('/user-categories/:userId', getUserCategories);
-
-// 5. Actualizar las categorías y subcategorías de un usuario según su nivel
-router.put('/user-categories/:userId', updateUserCategories);
+// Ruta de prueba
+router.get('/testcategories', (req, res) => {
+    res.json({ message: 'Esta es una ruta de prueba para categorías.' });
+});
 
 module.exports = router;

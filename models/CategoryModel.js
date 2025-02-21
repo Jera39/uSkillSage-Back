@@ -2,31 +2,38 @@ const mongoose = require('mongoose');
 
 // Esquema para las categorías principales
 const categorySchema = new mongoose.Schema({
-    name: { type: String, required: true }, // Nombre genérico de la categoría (e.g., "Salud y Bienestar")
-    description: { 
-        type: {
-            fantasy: { type: String }, // Descripción para fantasía
-            sciFi: { type: String },   // Descripción para ciencia ficción
-            mythology: { type: String } // Descripción para mitología
-        },
+    genre: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Genre',
         required: true
-    },
-    genderSpecificDescriptions: { 
-        type: {
-            male: { 
-                fantasy: { type: String },
-                sciFi: { type: String },
-                mythology: { type: String }
-            },
-            female: { 
-                fantasy: { type: String },
-                sciFi: { type: String },
-                mythology: { type: String }
-            }
-        },
+    }, // Referencia al género narrativo
+    category: {
+        type: String,
         required: true
+    }, // Categoría principal (Salud y Bienestar, Conocimiento, etc.)
+    subcategory: {
+        type: String,
+        required: true
+    }, // Subcategoría específica
+    missionTemplates: [{
+        gender: {
+            type: String,
+            enum: ['male', 'female'],
+            required: true
+        },
+        description: {
+            type: String,
+            required: true
+        }
+    }], // Plantillas de misiones por género
+    isActive: {
+        type: Boolean,
+        default: true
     },
-    createdAt: { type: Date, default: Date.now } // Fecha de creación
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }
 });
 
 // Crear el modelo
