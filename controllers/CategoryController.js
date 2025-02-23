@@ -14,30 +14,17 @@ exports.manageCategories = async (req, res) => {
 
         switch (action.toUpperCase()) {
             case "C": // Crear una categoría
-                // Validar que se proporcionen todos los campos obligatorios
-                if (
-                    !categoryData.genreId ||
-                    !categoryData.category ||
-                    !categoryData.subcategory ||
-                    !categoryData.missionTemplates
-                ) {
+                // Validar que se proporcionen los campos obligatorios
+                if (!categoryData.name || !categoryData.description) {
                     return res
                         .status(400)
-                        .json({ error: "Todos los campos son obligatorios." });
-                }
-
-                // Verificar si el género existe
-                const genreDoc = await firestoreDb.collection("genres").doc(categoryData.genreId).get();
-                if (!genreDoc.exists) {
-                    return res.status(400).json({ error: "El género especificado no existe." });
+                        .json({ error: "El nombre y la descripción son campos obligatorios." });
                 }
 
                 // Verificar si la categoría ya existe
                 const categorySnapshot = await firestoreDb
                     .collection("categories")
-                    .where("genreId", "==", categoryData.genreId)
-                    .where("category", "==", categoryData.category)
-                    .where("subcategory", "==", categoryData.subcategory)
+                    .where("name", "==", categoryData.name)
                     .get();
 
                 if (!categorySnapshot.empty) {
@@ -46,10 +33,9 @@ exports.manageCategories = async (req, res) => {
 
                 // Crear la nueva categoría
                 const newCategory = {
-                    genreId: categoryData.genreId,
-                    category: categoryData.category,
-                    subcategory: categoryData.subcategory,
-                    missionTemplates: categoryData.missionTemplates,
+                    name: categoryData.name,
+                    description: categoryData.description,
+                    subcategories: categoryData.subcategories || [], // Subcategorías opcionales
                     isActive: true, // Por defecto, la categoría está activa
                     createdAt: new Date(),
                 };
@@ -62,36 +48,48 @@ exports.manageCategories = async (req, res) => {
                         id: categoryRef.id,
                     });
 
-            case "U": // Actualizar una categoría
-                if (!id) {
-                    return res
-                        .status(400)
-                        .json({
-                            error: "El ID de la categoría es obligatorio para actualizar.",
-                        });
-                }
-
-                const categoryToUpdate = await firestoreDb.collection("categories").doc(id).get();
-                if (!categoryToUpdate.exists) {
-                    return res.status(404).json({ error: "Categoría no encontrada." });
-                }
-
-                // Construir el objeto de actualización
-                const updatedData = {};
-                if (categoryData.genreId) {
-                    // Verificar si el género existe
-                    const genreDoc = await firestoreDb.collection("genres").doc(categoryData.genreId).get();
-                    if (!genreDoc.exists) {
-                        return res.status(400).json({ error: "El género especificado no existe." });
+                    case "U": // Editar una categoría
+                    if (!id) {
+                      return res.status(400).json({ error: "El ID de la categoría es obligatorio para editar." });
                     }
-                    updatedData.genreId = categoryData.genreId;
-                }
-                if (categoryData.category) updatedData.category = categoryData.category;
-                if (categoryData.subcategory) updatedData.subcategory = categoryData.subcategory;
-                if (categoryData.missionTemplates) updatedData.missionTemplates = categoryData.missionTemplates;
-
-                await firestoreDb.collection("categories").doc(id).update(updatedData);
-                return res.json({ message: "Categoría actualizada exitosamente." });
+                  
+                    const categoryToUpdate = await firestoreDb.collection("categories").doc(id).get();
+                    if (!categoryToUpdate.exists) {
+                      return res.status(404).json({ error: "Categoría no encontrada." });
+                    }
+                  
+                    // Obtener las subcategorías actuales
+                    let subcategories = categoryToUpdate.data().subcategories || [];
+                  
+                    // Caso 1: Agregar una nueva subcategoría
+                    if (categoryData.subcategory) {
+                      const newSubcategory = {
+                        id: Date.now().toString(), // Generar un ID único para la subcategoría
+                        name: categoryData.subcategory.name,
+                        description: categoryData.subcategory.description,
+                        isActive: true,
+                        createdAt: new Date(),
+                      };
+                  
+                      subcategories.push(newSubcategory);
+                    }
+                  
+                    // Caso 2: Actualizar la lista completa de subcategorías
+                    if (categoryData.subcategories && Array.isArray(categoryData.subcategories)) {
+                      subcategories = categoryData.subcategories;
+                    }
+                  
+                    // Verificar que subcategories sea un array válido
+                    if (!Array.isArray(subcategories)) {
+                      return res.status(400).json({ error: "Las subcategorías deben ser un array." });
+                    }
+                  
+                    // Actualizar la categoría con la nueva lista de subcategorías
+                    await firestoreDb.collection("categories").doc(id).update({
+                      subcategories: subcategories,
+                    });
+                  
+                    return res.json({ message: "Categoría actualizada exitosamente." });
 
             case "D": // Desactivar una categoría
                 if (!id) {
@@ -132,22 +130,5 @@ exports.manageCategories = async (req, res) => {
     } catch (error) {
         console.error("Error al gestionar la categoría:", error);
         return res.status(500).json({ error: "Error al gestionar la categoría." });
-    }
-};
-
-/**
- * Obtener todos los géneros disponibles para ser usados al crear/editar categorías.
- */
-exports.getGenresForCategories = async (req, res) => {
-    try {
-        const snapshot = await firestoreDb.collection("genres").where("isActive", "==", true).get();
-        const genres = [];
-        snapshot.forEach(doc => {
-            genres.push({ id: doc.id, ...doc.data() });
-        });
-        return res.json(genres);
-    } catch (error) {
-        console.error("Error al obtener los géneros:", error);
-        return res.status(500).json({ error: "Error al obtener los géneros." });
     }
 };

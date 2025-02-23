@@ -14,12 +14,14 @@ const port = 3000;
 // const port = process.env.PORT || 3000;
 
 // Middleware
+app.use(cors());
+
 app.use(express.json());
-app.use(cors({
-    origin: ['https://u-skill-sage.vercel.app', 'http://localhost:4200'], // Permite estas URLs
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
-    allowedHeaders: ['Content-Type', 'Authorization'] // Encabezados permitidos
-}));
+// app.use(cors({
+//     origin: ['https://u-skill-sage.vercel.app', 'http://localhost:4200'], // Permite estas URLs
+//     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
+//     allowedHeaders: ['Content-Type', 'Authorization'] // Encabezados permitidos
+// }));
 
 // Rutas
 app.use('/api', userRoutes);

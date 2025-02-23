@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { manageCategories, getGenresForCategories } = require('../controllers/CategoryController');
+const { manageCategories } = require('../controllers/CategoryController'); // Solo necesitamos manageCategories
 
 // Ruta genérica para gestionar categorías
 router.route('/categories')
@@ -11,9 +11,6 @@ router.route('/categories')
 router.route('/categories/:id')
     .put((req, res) => manageCategories(req, res)) // Actualizar una categoría (action=U)
     .delete((req, res) => manageCategories(req, res)); // Desactivar una categoría (action=D)
-
-// Ruta para obtener todos los géneros disponibles para ser usados al crear/editar categorías
-router.get('/genres-for-categories', (req, res) => getGenresForCategories(req, res));
 
 // Ruta de prueba
 router.get('/testcategories', (req, res) => {

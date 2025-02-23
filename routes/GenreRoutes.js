@@ -13,7 +13,7 @@ router.route('/genres/:id')
     .delete((req, res) => manageGenres(req, res)); // Desactivar un género (action=D)
 
 router.get('/testgenres', (req, res) => {
-    res.json({ message: 'Esta es una ruta de prueba.' });
+    res.json({ message: 'Esta es una ruta de prueba de genero narrativo.' });
 });
 
 module.exports = router;
